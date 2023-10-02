@@ -1,9 +1,7 @@
 import pytest
 from selenium.webdriver.common.by import By
 from selenium import webdriver
-import datetime
-import os
-from selenium.webdriver.remote.webdriver import WebDriver
+import time
 
 
 def test_login(driver):
@@ -27,25 +25,24 @@ def test_login(driver):
     button_login = driver.find_element(By.XPATH, '//*[@id="login-button"]')
     button_login.click()
     print("Click login button")
-
-    url = "https://www.saucedemo.com/inventory.html"
+    
+    menu = driver.find_element(By.XPATH, '//*[@id="react-burger-menu-btn"]')
+    menu.click()
+    print('Click menu button')
+    time.sleep(5)
+    
+    link_about = driver.find_element(By.XPATH, '//*[@id="about_sidebar_link"]')
+    link_about.click()
+    print("Click about button")
+    
+    default_url = 'https://saucelabs.com/'
     get_url = driver.current_url
     print(get_url)
-    assert url == get_url
+    assert default_url == get_url
     print("Url actual")
-
-    text_products = driver.find_element(
-        By.XPATH, '//*[@id="header_container"]/div[2]/span'
-    )
-    value_text_products = text_products.text
-    print(value_text_products)
-    assert value_text_products == "Products"
-    print("products passed")
-
-    now_date = datetime.datetime.utcnow().strftime("%Y.%m.%d.%H.%M.%S")
-    name_screenshot = "screenshot" + now_date + ".png"
-    folder_path = (
-        "C:\\Users\\danii\\Python Automation\\selenium\\SeleniumLearn\\Screens"
-    )
-    screenshot_path = os.path.join(folder_path, name_screenshot)
-    driver.save_screenshot(screenshot_path)
+    
+    driver.back()
+    print('Go back')
+    time.sleep(2)
+    driver.forward()
+    print('Go forward')

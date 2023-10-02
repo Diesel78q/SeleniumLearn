@@ -3,7 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium import webdriver
 import datetime
 import os
-from selenium.webdriver.remote.webdriver import WebDriver
+import time
+from selenium.webdriver import ActionChains
 
 
 def test_login(driver):
@@ -41,6 +42,12 @@ def test_login(driver):
     print(value_text_products)
     assert value_text_products == "Products"
     print("products passed")
+
+    # driver.execute_script("window.scrollTo(0, 600)")
+    action = ActionChains(driver)
+    T_shirt = driver.find_element(By.XPATH, '//*[@id="add-to-cart-sauce-labs-onesie"]')
+    action.move_to_element(T_shirt).perform()
+    time.sleep(5)
 
     now_date = datetime.datetime.utcnow().strftime("%Y.%m.%d.%H.%M.%S")
     name_screenshot = "screenshot" + now_date + ".png"
